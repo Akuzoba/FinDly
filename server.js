@@ -3,6 +3,8 @@ import logger from './logger.js';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import genres from './routes/genres.js';
+import customers from './routes/customers.js';
+
 
 
 dotenv.config();
@@ -18,6 +20,7 @@ app.use(express.static('public'));
 app.use(logger);
 app.use(morgan('tiny'));
 app.use('/api/genres', genres);
+app.use('/api/customers', customers);
 
 
 app.listen(PORT, () => {
