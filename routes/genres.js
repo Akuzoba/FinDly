@@ -1,28 +1,13 @@
 import express from 'express';
-import Joi from 'joi';
+import Genre from '../models/genre.js';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
+
 
 dotenv.config();
 
 
 const router = express.Router();
-mongoose.connect(process.env.MONGO_URI).then(() => {    
-    console.log('Connected to MongoDB');
-}).catch((err) => {
-    console.error('Error connecting to MongoDB', err);
-});
 
-const genreSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        minlength: 3,
-        maxlength: 50
-    }
-});
-
-const Genre = mongoose.model('Genre', genreSchema);
 
 
 // const validateInput = (results) => {
