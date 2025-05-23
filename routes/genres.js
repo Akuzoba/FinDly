@@ -1,5 +1,5 @@
 import express from 'express';
-import Genre from '../models/genre.js';
+import {Genre} from '../models/genre.js';
 import dotenv from 'dotenv';
 
 
