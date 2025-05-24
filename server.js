@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import genres from './routes/genres.js';
 import customers from './routes/customers.js';
 import movies from './routes/movies.js';
+import rentals from './routes/rentals.js';
 
 
 
@@ -23,6 +24,7 @@ app.use(morgan('tiny'));
 app.use('/api/genres', genres);
 app.use('/api/movies', movies); 
 app.use('/api/customers', customers);
+app.use('/api/rentals', rentals);
 
 
 app.listen(PORT, () => {

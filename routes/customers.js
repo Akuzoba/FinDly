@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import Customer from '../models/customers.js';
+import { Customer }from '../models/customers.js';
 
 dotenv.config();
  const router = express.Router();
