@@ -4,13 +4,6 @@ import { genreSchema } from "./genre.js";
 
 
 
-dotenv.config();
-
-mongoose.connect(process.env.MONGO_URI).then(() => {
-    console.log("Connected to MongoDB");
-}).catch((err) => { 
-    console.error("Error connecting to MongoDB", err);
-});
 
  
 
@@ -38,8 +31,18 @@ const movieSchema = new mongoose.Schema({
         max: 255
     }
 });
+const validateMovie = (genre) => {
+    const schema = Joi.object({
+        title: Joi.string().min(5).max(50).required(),
+        genreID: Joi.string().required(),
+        numberInStock: Joi.number().min(0).max(255),
+        dailyRentalRate: Joi.number().min(0).max(50)
+    });
+     return Joi.validate(genre,schema)
+  
+};
 const Movie = mongoose.model('Movie', movieSchema);
-export { Movie, movieSchema };
+export { Movie, movieSchema, validateMovie };
 // const movies = [
 //     { id: 1, title: 'Movie1', genre: 'Action', numberInStock: 10, dailyRentalRate: 2.5 },
 //     { id: 2, title: 'Movie2', genre: 'Comedy', numberInStock: 5, dailyRentalRate: 3.0 },

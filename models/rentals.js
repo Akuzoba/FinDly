@@ -1,14 +1,9 @@
 import mangoose from 'mongoose';
-import dotenv from 'dotenv';
+import Joi from 'joi';
+import joiObjectid from 'joi-objectid';
 
-dotenv.config();
+const JoiObjectId = joiObjectid(Joi);
 
-mangoose.connect(process.env.MONGO_URI).then(() => {
-    console.log('Connected to MongoDB');
-}
-).catch((err) => {
-    console.error('Error connecting to MongoDB', err);
-});
 
 const rentalSchema = new mangoose.Schema({
     customer: {
@@ -59,5 +54,13 @@ const rentalSchema = new mangoose.Schema({
     }
 });
 
+const validateRental = (rental) => {
+    const schema = Joi.object({
+        customerId: JoiObjectId().required(),
+        movieId: JoiObjectId().required(),
+    });
+    return Joi.validate(rental, schema);
+}
+
 const Rental = mangoose.model('Rental', rentalSchema);
-export { Rental, rentalSchema };
+export { Rental, rentalSchema, validateRental };

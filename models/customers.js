@@ -1,16 +1,8 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import Joi from 'joi';
 
 
-dotenv.config();
-
-
-
-mongoose.connect(process.env.MONGO_URI).then(() => {    
-    console.log('Connected to MongoDB');
-}).catch((err) => {
-    console.error('Error connecting to MongoDB', err);
-});
 
 const customerSchema = new mongoose.Schema({
     name: {
@@ -32,6 +24,15 @@ const customerSchema = new mongoose.Schema({
     }
 });
 
+const validateCustomer = (customer) => {
+    const schema = Joi.object({
+        name: Joi.string().min(5).max(50).required(),
+        isGold: Joi.boolean(),
+        phone: Joi.string().min(5).max(50).required()
+    });
+    return schema.validate(customer);
+}
+
 const Customer = mongoose.model('Customer', customerSchema);
 
-export { Customer , customerSchema };
+export { Customer , customerSchema, validateCustomer };

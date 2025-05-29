@@ -1,19 +1,12 @@
-import mongoose from "mongoose";
 import express from "express";
-import dotenv from "dotenv";
 import { Genre } from "../models/genre.js";
-import { Movie } from "../models/movies.js";
+import { Movie, validateMovie } from "../models/movies.js";
 
 
 
-dotenv.config();
 
 const router = express.Router();
-mongoose.connect(process.env.MONGO_URI).then(() => {
-    console.log("Connected to MongoDB");
-}).catch((err) => { 
-    console.error("Error connecting to MongoDB", err);
-});
+
 
 router.get('/', async (req, res) => {
     
@@ -46,6 +39,9 @@ router.get('/:id',async (req,res) => {
 router.post('/', async (req,res) => {
     
         try {
+            const { error } = validateMovie(req.body);
+            if(error) return res.status(400).send(error.details[0].message);
+
             const genre = await Genre.findById(req.body.genreID);
             if (!genre) return res.status(404).send('the genre with the given ID was not found.');
             const movie = new Movie({

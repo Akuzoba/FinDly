@@ -1,24 +1,16 @@
 import express from 'express';
-import {Genre} from '../models/genre.js';
-import dotenv from 'dotenv';
+import {Genre,validateGenre} from '../models/genre.js';
 
 
-dotenv.config();
+
+
 
 
 const router = express.Router();
 
 
 
-// const validateInput = (results) => {
-//     const schema = Joi.object({
-//         name: Joi.string().min(3).required()
-//     });
-//     const { error } = schema.validate(results);
-//     if (error) {
-//         return error;
-//     }
-// };
+
 
 // var genres = [
 //     { id: 1, name: 'Action' },
@@ -55,8 +47,11 @@ const router = express.Router();
   });
   router.post('/', (req,res) => {
       async function createGenre() {
-        
+       
         try {
+                 const { error } = validateGenre(req.body);
+                if (error)return res.status(400).send(error.details[0].message);
+        
                 const g = new Genre({
                     name: req.body.name
                 });

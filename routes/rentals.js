@@ -1,10 +1,9 @@
 import express from 'express';
-import dotenv from 'dotenv';
-import { Rental } from '../models/rentals.js';
+import { Rental, validateRental } from '../models/rentals.js';
 import { Customer } from '../models/customers.js';
 import { Movie } from '../models/movies.js';
 
-dotenv.config();
+
 
 const router = express.Router();
 
@@ -32,6 +31,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
+        const { error } = validateRental(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
         const customer = req.body.customerID;
         const movie = req.body.movieID;
         const customerData = await Customer.findById(customer);

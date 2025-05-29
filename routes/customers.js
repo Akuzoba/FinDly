@@ -1,8 +1,7 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import { Customer }from '../models/customers.js';
 
-dotenv.config();
+
  const router = express.Router();
  
  
@@ -36,6 +35,9 @@ router.get('/',async (req, res) => {
       
         
         try {
+
+            const { error } = Customer.validateCustomer(req.body);
+            if (error) return res.status(400).send(error.details[0].message);
                 const g = new Customer({
                     name: req.body.name,
                     isGold: req.body.isGold,
