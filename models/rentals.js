@@ -59,7 +59,7 @@ const validateRental = (rental) => {
         customerId: JoiObjectId().required(),
         movieId: JoiObjectId().required(),
     });
-    return Joi.validate(rental, schema);
+    return  schema.validate(rental);
 }
 
 const Rental = mangoose.model('Rental', rentalSchema);

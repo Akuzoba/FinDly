@@ -1,5 +1,6 @@
 import express from 'express';
 import {Genre,validateGenre} from '../models/genre.js';
+import { authorize } from '../middleware/auth.js';
 
 
 
@@ -45,7 +46,7 @@ const router = express.Router();
         }
   getGenre();
   });
-  router.post('/', (req,res) => {
+  router.post('/',authorize,(req,res) => {
       async function createGenre() {
        
         try {

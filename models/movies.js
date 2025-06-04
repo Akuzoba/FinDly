@@ -38,7 +38,7 @@ const validateMovie = (genre) => {
         numberInStock: Joi.number().min(0).max(255),
         dailyRentalRate: Joi.number().min(0).max(50)
     });
-     return Joi.validate(genre,schema)
+     return schema.validate(genre)
   
 };
 const Movie = mongoose.model('Movie', movieSchema);

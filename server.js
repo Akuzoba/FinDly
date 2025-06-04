@@ -7,6 +7,8 @@ import customers from './routes/customers.js';
 import movies from './routes/movies.js';
 import rentals from './routes/rentals.js';
 import  User  from './routes/users.js';
+import auth from './routes/auth.js';
+
 
 
 
@@ -29,6 +31,7 @@ app.use('/api/movies', movies);
 app.use('/api/customers', customers);
 app.use('/api/rentals', rentals);
 app.use('/api/users', User);
+app.use('/api/auth',auth);
 
 
 app.listen(PORT, () => {
