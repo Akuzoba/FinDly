@@ -2,6 +2,7 @@ import express from 'express';
 import { Rental, validateRental } from '../models/rentals.js';
 import { Customer } from '../models/customers.js';
 import { Movie } from '../models/movies.js';
+import { authorize } from '../middleware/auth.js';
 
 
 
@@ -29,7 +30,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/',authorize, async (req, res) => {
     try {
         const { error } = validateRental(req.body);
         if (error) return res.status(400).send(error.details[0].message);
@@ -64,7 +65,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id',authorize, async (req, res) => {
 
 })
 

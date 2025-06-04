@@ -71,7 +71,7 @@ const router = express.Router();
        createGenre();
   }
   );
-  router.put('/:id', (req,res) => {
+  router.put('/:id',authorize, (req,res) => {
       const id = req.params.id;
       const name = req.body.name
       async function editGenre(){
@@ -88,7 +88,7 @@ const router = express.Router();
     }
         editGenre();
   });
-  router.delete('/:id', (req,res) => {
+  router.delete('/:id',authorize, (req,res) => {
      const id = req.params.id;
       async function deleteGenre(){
         

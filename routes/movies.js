@@ -1,6 +1,7 @@
 import express from "express";
 import { Genre } from "../models/genre.js";
 import { Movie, validateMovie } from "../models/movies.js";
+import { authorize } from "../middleware/auth.js";
 
 
 
@@ -36,7 +37,7 @@ router.get('/:id',async (req,res) => {
     
 }
 );
-router.post('/', async (req,res) => {
+router.post('/',authorize, async (req,res) => {
     
         try {
             const { error } = validateMovie(req.body);
@@ -62,7 +63,7 @@ router.post('/', async (req,res) => {
    
 }
 );
-router.put('/:id', async (req,res) => {
+router.put('/:id',authorize, async (req,res) => {
     
    
         try {
@@ -81,7 +82,7 @@ router.put('/:id', async (req,res) => {
 }
 );
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',authorize, async (req, res) => {
   try {
     const id = req.params.id;
     const result = await Movie.deleteOne({ _id: id });

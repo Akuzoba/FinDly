@@ -1,5 +1,6 @@
 import express from 'express';
 import { Customer }from '../models/customers.js';
+import { authorize } from '../middleware/auth.js';
 
 
  const router = express.Router();
@@ -31,7 +32,7 @@ router.get('/',async (req, res) => {
             }
  
   });
-  router.post('/',async (req,res) => {
+  router.post('/',authorize,async (req,res) => {
       
         
         try {
@@ -57,7 +58,7 @@ router.get('/',async (req, res) => {
       
   }
   );
-  router.put('/:id',async (req,res) => {
+  router.put('/:id',authorize,async (req,res) => {
       const id = req.params.id;
       const updates = req.body
       
@@ -79,7 +80,7 @@ router.get('/',async (req, res) => {
         }
     
   });
-  router.delete('/:id', async (req,res) => {
+  router.delete('/:id',authorize, async (req,res) => {
      const id = req.params.id;
       
         
